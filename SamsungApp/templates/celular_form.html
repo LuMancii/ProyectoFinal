@@ -1,0 +1,14 @@
+{% extends 'padre.html' %}
+
+
+{% block ContenidoQueCambia %}
+
+    <h2>Agregar celular</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Actualizar">
+    </form>
+
+{% endblock ContenidoQueCambia %}

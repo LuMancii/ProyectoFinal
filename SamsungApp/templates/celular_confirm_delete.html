@@ -1,0 +1,13 @@
+{% extends 'padre.html' %}
+
+
+{% block ContenidoQueCambia %}
+
+    <form method="post"> {% csrf_token %}
+        <p>¿Estás seguro que deseas borrar "{{celular.nombre}} {{celular.serie}}"?</p>
+        <button type="submit">Confirmar</button>
+
+
+    </form>
+
+{% endblock ContenidoQueCambia %}

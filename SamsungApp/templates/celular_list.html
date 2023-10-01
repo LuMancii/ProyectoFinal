@@ -1,0 +1,35 @@
+{% extends 'padre.html' %}
+
+
+{% block ContenidoQueCambia %}
+    <h1>Lista de Celular</h1>
+
+        
+        {% if not object_list %}
+            <h3 class="noInfo">No hay productos publicados</h3>
+            
+        {% endif %}
+            
+
+    <ul>
+        
+        {% for celular in object_list %}
+
+            <li>
+                <p>Nombre: {{celular.nombre}}</p>
+                <p>Serie: {{celular.serie}}</p>
+                <p>{{celular.imagenCelular}}</p>
+                <p>
+                    <a href="{% url 'Detail' celular.id %}">Ver</a>
+                    <a href="{% url 'Update' celular.id %}">Editar</a>
+                    <a href="{% url 'Delete' celular.id %}">Eliminar</a>
+                </p>
+            </li>
+            
+        {% endfor %}
+            
+    </ul>
+
+    <a href="{% url 'New' %}">Nuevo</a>
+
+{% endblock ContenidoQueCambia %}
