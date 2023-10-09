@@ -22,10 +22,10 @@ class Celular(models.Model):
     pantalla = models.DecimalField(max_digits=2, decimal_places=1)
     camara = models.DecimalField(max_digits=3, decimal_places=1)
     fechaPublicacion = models.DateTimeField(auto_now_add=True)
-    imagenCelular = models.ImageField(null=True, blank=True, upload_to="media/")
+    imagenCelular = models.ImageField(null=True, blank=True, upload_to="media")
     
     def str(self):
-        return f'{self.id} {self.nombre} {self.serie} {self.precio} {self.memoria} {self.imagenCelular}'
+        return f'{self.id} {self.nombre} {self.serie} {self.precio} {self.memoria}'
 
     class Meta:
         ordering = ['usuario', '-fechaPublicacion']
@@ -33,7 +33,7 @@ class Celular(models.Model):
     
 class Post(models.Model):
     
-    Post =models.ForeignKey(User, on_delete=models.CASCADE, related_name='Post')
+    post =models.ForeignKey(User, on_delete=models.CASCADE, related_name='Post', null=True)
     nombre = models.CharField(max_length=40)
     mensaje = models.TextField(null=True, blank=True)
     fechaComentario = models.DateTimeField(auto_now_add=True)
@@ -42,5 +42,5 @@ class Post(models.Model):
         ordering = ['-fechaComentario']
 
     def __str__(self):
-        return '%s - %s' % (self.nombre, self.Post)
+        return '%s - %s' % (self.nombre, self.post)
     

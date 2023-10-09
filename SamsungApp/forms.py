@@ -2,6 +2,7 @@ from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+from .models import Post
 
 
 class Formulario(forms.Form):
@@ -24,8 +25,6 @@ class UserRegisterForm(UserCreationForm):
     first_name = forms.CharField()
     imagen_avatar = forms.ImageField(required=False)
 
-   
-
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'last_name', 'first_name'] 
@@ -45,3 +44,12 @@ class FormularioEdicion(UserChangeForm):
 class AvatarFormulario(forms.Form):
     
     imagen = forms.ImageField(required=True)
+    
+class FormularioPost(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('nombre', 'mensaje')
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'mensaje' : forms.Textarea(attrs={'class': 'form-control'}),
+        }

@@ -1,12 +1,40 @@
 {% extends 'padre.html' %}
 
-
+{% load static %}
 {% block ContenidoQueCambia %}
-<h2 class="text-center">
-    Acerca de Mi
-</h2>
+<br>
+<br>
 
 
-    <p>Soy Lucas Mancini,  tengo 19 años y actualmente estoy estudiando ingeniería en informática en la UBA y pienso orientarme desde la rama de la ciberseguridad.
-    Durante este tiempo realicé estuve realizando el curso de CoderHouse sobre el lenguaje de programación "Python" utilizando como el Framework "Django".</p>
+    <div class="container">
+       <h2 class="text-center text-dark">
+           Acerca de Mi
+       </h2>
+       <br>
+       <div class="row g-4">
+           <div class="col-md-6 col-lg-3">
+               <div class="card bg-success">
+                    <div class="card-body text-center">
+                        <img src="{% static 'static\assets\media\Perro-perfil.png' %}" class="rounded-circle mb-3" width="150px">
+                    <h3 class="card-title mb-3">Lucas Mancini</h3>
+                    <p class="card-text">Estudiante</p>
+                    </div>
+               </div>
+           </div>
+           <div class="col">
+            <div class="">
+                 <div class="text-center">
+                    <p>Soy Lucas Mancini,  tengo 19 años y actualmente estoy estudiando ingeniería en informática en la UBA y pienso orientarme desde la rama de la ciberseguridad.
+                        Durante este tiempo realicé estuve realizando el curso de CoderHouse sobre el lenguaje de programación "Python" utilizando como el Framework "Django".</p>                 </div>
+            </div>
+        </div>
+       </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    
 {% endblock ContenidoQueCambia %}

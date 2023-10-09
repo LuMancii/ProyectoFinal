@@ -13,7 +13,8 @@ from .forms import *
 
 def inicio(req):
     
-    return render(req, 'inicio.html')
+    contexto = {"celulares" : Celular.objects.all()}
+    return render(req, 'inicio.html', contexto,)
 
 def sobremi(req):
     return render(req, 'about.html')
@@ -64,14 +65,18 @@ class CelularDetail(DetailView):
     template_name = 'celular_detalle.html'
 
 
-class CelularCreate(CreateView):
+class CelularCreate(LoginRequiredMixin, CreateView):
     
     model = Celular
-    template_name = 'anadircelular.html'
-    success_url = '/SamsungApp/celular/list'
+    template_name = 'celular_creation.html'
+    next_page = reverse_lazy('list')
     fields = ('__all__')
     
-class CelularUpdate(UpdateView):
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+class CelularUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
     model = Celular
     template_name = 'celular_form.html'
@@ -79,7 +84,7 @@ class CelularUpdate(UpdateView):
     fields = ('__all__')
     
         
-class CelularDelete(DeleteView):
+class CelularDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     model = Celular
     template_name = 'celular_confirm_delete.html'
@@ -88,7 +93,7 @@ class CelularDelete(DeleteView):
 class Login(LoginView):
     template_name = 'login.html'
     fields = ('__all__')
-    success_url = reverse_lazy('inicio.html')
+    next_page = reverse_lazy('Inicio')
 
     
 class SignUp(CreateView):
@@ -101,3 +106,18 @@ class UsuarioEdicion(UpdateView):
     template_name= 'edicionPerfil.html'
     success_url = reverse_lazy('Inicio')
     
+    def get_object(self):
+        return self.request.user
+
+class PostPagina(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = FormularioPost
+    template_name = 'mensaje.html'
+    success_url = reverse_lazy('Mensajeenviado')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+def mensajeEnviado(request):
+    return render(request, 'mensaje_enviado.html')

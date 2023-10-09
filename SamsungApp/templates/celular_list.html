@@ -21,8 +21,10 @@
                 <p>{{celular.imagenCelular}}</p>
                 <p>
                     <a href="{% url 'Detail' celular.id %}">Ver</a>
+                    {% if user.is_authenticated and producto.publicado == user %}
                     <a href="{% url 'Update' celular.id %}">Editar</a>
                     <a href="{% url 'Delete' celular.id %}">Eliminar</a>
+                    {% endif %}
                 </p>
             </li>
             
