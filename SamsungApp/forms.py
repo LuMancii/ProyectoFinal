@@ -50,6 +50,6 @@ class FormularioPost(forms.ModelForm):
         model = Post
         fields = ('nombre', 'mensaje')
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'destinatario': forms.TextInput(attrs={'class': 'form-control'}),
             'mensaje' : forms.Textarea(attrs={'class': 'form-control'}),
         }

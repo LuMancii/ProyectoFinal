@@ -8,13 +8,13 @@
     <p>Cámara de {{celular.camara}}MP</p>
     <h5>{{celular.memoria}}GB</h5>
     <h4>Precio :${{celular.precio}}</h4>
+    <div>
+        {% if celular.imagenCelular %}
+            <p class="text-center"><img src="{{celular.imagenCelular.url}}" alt="{{object.nombre}}" title="{{object.nombre}} {{object.serie}}" width="400px" height="100%"></p>
+        {% endif %}
+    </div>
     <p>
         <a href="{% url 'List' %}">Regresar</a>
     </p>
-    <div>
-        {% if celular.imagenCelular %}
-        <p><img src="{{object.imagen.url}}" alt="{{object.nombre}}" title="{{object.nombre}} {{object.serie}}" width="300px" height="100%"></p>
-        {% endif %}
-    </div>
 
 {% endblock ContenidoQueCambia %}

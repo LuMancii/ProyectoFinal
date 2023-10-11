@@ -1,0 +1,23 @@
+{% extends 'padre.html' %}
+
+
+{% block ContenidoQueCambia %}
+
+<h1>Mensajes</h1>
+
+    {% if not object_list  %}
+        <h3 class="noInfo">No hay mensajes...</h3>
+    {% endif %}
+
+<ul>
+    {% for mensaje in object_list %}
+    <li class="botonPeque mensaje">
+        <p>{{mensaje.mensaje}} </p>
+        {% if user.is_authenticated and mensaje.destinatario == user %}
+            <a href="{% url 'Mensajeeliminado' mensaje.id %}"> Eliminar </a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock ContenidoQueCambia %}

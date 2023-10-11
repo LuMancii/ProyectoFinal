@@ -18,4 +18,6 @@ urlpatterns = [
     path('edicion-perfil/', UsuarioEdicion.as_view() , name = 'Edicionperfil'),
     path(r'mensaje/', PostPagina.as_view() , name = 'Mensaje'),
     path('mensaje-enviado/', mensajeEnviado , name = 'Mensajeenviado'),
+    path('mensaje/list', PostList.as_view(), name='Mensajelista'),
+    path(r'mensaje/(?P<pk>\d+)$/delete', PostDelete.as_view(), name='Mensajeeliminado'),
 ]

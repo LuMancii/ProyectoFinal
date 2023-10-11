@@ -18,10 +18,13 @@
             <li>
                 <p>Nombre: {{celular.nombre}}</p>
                 <p>Serie: {{celular.serie}}</p>
-                <p>{{celular.imagenCelular}}</p>
-                <p>
+                <div>
+                    {% if celular.imagenCelular %}
+                        <p><img src="{{celular.imagenCelular.url}}" alt="{{celular.nombre}}" title="{{celular.nombre}} {{celular.serie}}" width="200px" height="100%"></p>
+                    {% endif %}
+                </div>
                     <a href="{% url 'Detail' celular.id %}">Ver</a>
-                    {% if user.is_authenticated and producto.publicado == user %}
+                    {% if user.is_authenticated and celular.publicado == user %}
                     <a href="{% url 'Update' celular.id %}">Editar</a>
                     <a href="{% url 'Delete' celular.id %}">Eliminar</a>
                     {% endif %}

@@ -69,11 +69,11 @@ class CelularCreate(LoginRequiredMixin, CreateView):
     
     model = Celular
     template_name = 'celular_creation.html'
-    next_page = reverse_lazy('list')
-    fields = ('__all__')
+    success_url = '/SamsungApp/celular/list'
+    fields = ('nombre', "serie", 'precio', 'memoria', 'pantalla', 'camara', 'imagenCelular')
     
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        form.instance.publicado = self.request.user
         return super().form_valid(form)
     
 class CelularUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -83,12 +83,32 @@ class CelularUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     success_url = '/SamsungApp/celular/list'
     fields = ('__all__')
     
+    def form_valid(self, form):
+        form.instance.publicado = self.request.user
+        return super().form_valid(form)
+    
+    def test_func(self):
+        user_id = self.request.user.id
+        product_id = self.kwargs.get('pk')
+        return Celular.objects.filter(publicado=user_id, id=product_id).exists()
+    
+    def handle_no_permission(self):
+        return render(self.request, 'natura/not_found.html')
+    
         
 class CelularDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     model = Celular
     template_name = 'celular_confirm_delete.html'
     success_url = '/SamsungApp/celular/list'
+    
+    def test_func(self):
+        user_id = self.request.user.id
+        product_id = self.kwargs.get('pk')
+        return Celular.objects.filter(publicado=user_id, id=product_id).exists()
+    
+    def handle_no_permission(self):
+        return render(self.request, 'not_found.html')
     
 class Login(LoginView):
     template_name = 'login.html'
@@ -111,13 +131,30 @@ class UsuarioEdicion(UpdateView):
 
 class PostPagina(LoginRequiredMixin, CreateView):
     model = Post
-    form_class = FormularioPost
     template_name = 'mensaje.html'
     success_url = reverse_lazy('Mensajeenviado')
+    fields = ('nombre', 'mensaje')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        form.instance.destinatario = self.request.user
         return super().form_valid(form)
     
 def mensajeEnviado(request):
     return render(request, 'mensaje_enviado.html')
+
+class PostList(LoginRequiredMixin, ListView):
+    model = Post
+    template_name= 'mensaje_list.html'
+    
+    def get_queryset(self):
+        return Post.objects.filter(destinatario=self.request.user.id).all()
+
+class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = 'mensaje_delete.html'
+    success_url = reverse_lazy('Mensajelista')
+    
+    def test_func(self):
+        user_id = self.request.user.id
+        mensajes_id = self.kwargs.get('pk')
+        return Post.objects.filter(destinatario=user_id, id=mensajes_id).exists()

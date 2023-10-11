@@ -24,7 +24,7 @@ class Celular(models.Model):
     fechaPublicacion = models.DateTimeField(auto_now_add=True)
     imagenCelular = models.ImageField(null=True, blank=True, upload_to="media")
     
-    def str(self):
+    def __str__(self):
         return f'{self.id} {self.nombre} {self.serie} {self.precio} {self.memoria}'
 
     class Meta:
@@ -34,7 +34,7 @@ class Celular(models.Model):
 class Post(models.Model):
     
     nombre = models.CharField(max_length=40)
-    mensaje = models.TextField(null=True, blank=True)
+    mensaje = models.TextField(max_length=1000)
     fechaComentario = models.DateTimeField(auto_now_add=True)
     destinatario = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='destinatario')
 
